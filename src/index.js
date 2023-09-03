@@ -1,8 +1,10 @@
-const productRoutes = require('./routes/products.route')
-
 const fastify = require('fastify')({
     logger: true
 })
+
+const productRoutes = require('./routes/products.route')
+
+require('./utils/mongoose')
 
 productRoutes.forEach(route => {
     fastify.route(route)
@@ -11,8 +13,6 @@ productRoutes.forEach(route => {
 fastify.get('/', async (request, reply)=> {
     reply.send('Hello World!')
 })
-
-
 
 const start = async () => {
     await fastify.listen({ port: 3000 })

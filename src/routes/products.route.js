@@ -1,8 +1,11 @@
+const Product = require('../models/product.model');
+
 const routes = [{
     method: 'GET',
     url: '/products',
-    handler: (request, reply) => {
-        reply.send('Products');
+    handler: async (request, reply) => {
+        const products = await Product.find();
+        reply.send(`Products: ${products}`);
     }
 },
 {
