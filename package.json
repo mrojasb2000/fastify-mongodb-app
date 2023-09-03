@@ -4,5 +4,8 @@
     "fastify": "^4.22.2",
     "fastify-swagger": "^5.2.0",
     "mongoose": "^7.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   }
 }
