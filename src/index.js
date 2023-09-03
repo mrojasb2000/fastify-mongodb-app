@@ -1,10 +1,12 @@
-const productRoute = require('./routes/products.route')
+const productRoutes = require('./routes/products.route')
 
 const fastify = require('fastify')({
     logger: true
 })
 
-fastify.route(productRoute)
+productRoutes.forEach(route => {
+    fastify.route(route)
+})
 
 fastify.get('/', async (request, reply)=> {
     reply.send('Hello World!')
