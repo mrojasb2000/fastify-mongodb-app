@@ -1,33 +1,40 @@
 const Product = require('../models/product.model');
 
 const getProducts = async (request, reply) => {
-    const products = await Product.find();
-    return products;
+    return await Product.find();
 }
 
 const getProductById = async (request, reply) => {
-    const { id } = request.params;
-    const product = await Product.findById(id);
-    if (product == null) {
-        reply.code(404).send("Product not found")
-    } 
-    return product
+    const data = await Product.findById(request.params.id);
+    reply.send(data ? data: "Product not found")
 }
 
 const createProduct = async (request, reply) => {
-    const newProduct = new Product(request.body);
-    await newProduct.save()
-    reply.code(201).send(newProduct);
+    try {
+        const newProduct = new Product(request.body);
+        await newProduct.save()
+        reply.code(201).send(newProduct);
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 const updateProduct = async (request, reply) => {
-   const product = await Product.findByIdAndUpdate(request.params.id, request.body, {new: true});
-   return product
+    try {
+        const product = await Product.findByIdAndUpdate(request.params.id, request.body, {new: true});
+        reply.code(200).send(product);
+    } catch (err) {
+       console.log(err)
+    }
 }
 
 const deleteProduct = async (request, reply) => {
-    await Product.findByIdAndDelete(request.params.id)
-    reply.code(204).send("Product deleled");
+    try {
+        await Product.findByIdAndDelete(request.params.id)
+        reply.code(204).send("Product deleled");
+    } catch (err) {
+        console.log(err)
+    }
 }
 
 module.exports = {
