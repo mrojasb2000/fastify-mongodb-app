@@ -1,10 +1,10 @@
 const fastify = require('fastify')({
     logger: true
 })
-
-const productRoutes = require('./routes/products.route')
-
 require('./utils/mongoose')
+const productRoutes = require('./routes/products.route')
+const swagger = require('./utils/swagger')
+fastify.register(require("fastify-swagger"), swagger.options);
 
 productRoutes.forEach(route => {
     fastify.route(route)
